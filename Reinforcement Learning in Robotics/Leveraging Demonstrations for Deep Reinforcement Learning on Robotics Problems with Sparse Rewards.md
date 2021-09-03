@@ -1,11 +1,11 @@
-##Abstract
+## Abstract
 
 The paper presents a model-free reinforcement learning on real robotics with sparse rewards. It combines the deep deterministic policy gradient (DDPG) with human demonstration: by adding humn demonstrations in the replay buffer of DDPG training process. Both human demonstrations and actual interactions (from neural networks conducted in simulation) are used to fill a replay buffer.
 
 The add of human demonstrations replaces the need for carefully engineered rewards, and reduce the exploration problem encountered by classical RL approaches in these domains.
 
 
-##DDPG from Demonstrations (DDPGfD)
+## DDPG from Demonstrations (DDPGfD)
 The algorithm modifies DDPG to take advantage of demonstrations. DDPGfD loads the demonstration transitions into the replay buffer before the training begins and keeps all transitions forever. It modifies the DDPG in the following ways:
 
 1) Transitions from a human demonstrator are added to the replay buffer;
@@ -17,4 +17,3 @@ The algorithm modifies DDPG to take advantage of demonstrations. DDPGfD loads th
     L1 regularization: |omega|, where omega is the coefficient of a neural network. 
     L2 regularization: omega^2, where omega is the coefficient of a neural network. 
     The difference is that L1 shrinks the less important feature's coefficient to zero thus, removing some features altogether. 
-
