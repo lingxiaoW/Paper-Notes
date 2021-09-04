@@ -1,3 +1,5 @@
+https://danieltakeshi.github.io/2019/04/30/il-and-rl/
+
 ## Abstract
 
 * RL algorithms may be acceptable for a simulator, but it severely limits the applicability of deep RL to many real-world tasks, where the agent must learn in the real environment. 
