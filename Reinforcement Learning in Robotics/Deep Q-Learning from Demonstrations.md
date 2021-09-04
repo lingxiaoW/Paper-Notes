@@ -19,5 +19,35 @@ once the agent starts interacting with the environment.
 * The supervised loss is used for classification of the demonstrator's actions, while the Q-learning loss ensures that the network satisfies the Bellman equation and can be
 used as a starting point for TD learning. Regularization loss is to prevent the overfitting on a small scale demonstration data.
 
-* Double Q-learning loss:
-  * <img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1"> v v
+* 1-step double Q-learning loss:
+  * J_DQ = (R(s,a) + y * Q'(s_{t+1}, a_{t+1}^max) - Q(s,a))^2, 
+  * where a_t+1^max = argmax_a Q(s_t+1, a) and Q' is the target Q network
+* n-step double Q-learning loss (using forward view, where t is the current time step):
+  * J_n = r_t + yr_t+1 + ... + y^{n-1}r_{t+n-1} + max_a y^n Q(s_{t+n}, a)
+  * n-step returns helps propagate the values of the expert's trajectory to all the earlier states, learning to better pre-training.
+* Supervised large margin classification loss
+  * J_E = max_a [Q(s,a) + L(a_E, a)] - Q(s,a_E)
+  * where a_E is the action the expert takes at state s,
+  * L(a_E, a) is a margin function that is 0 when a=a_E and positive otherwise.
+* Loss function: 
+  * J(Q) = J_DQ + lamba_1 * J_n + lambda_2 * J_E + lambda_3 * J_L2
+
+
+## Algorithm Deep Q-Learning from Demonstrations
+* **Inputs**: D (replay buffer): initialized with demonstration data set; theta: initialize weights of behavior network; theta': initialize weights of target network; tau: frequency at which to update target network; k: number of pre-training gradient updates
+* **For** steps t in 1,2,3,...,k do
+  * Sample a mini-batch of n transitions from D with prioritization
+  * Calculate loss J(Q) using target network
+  * Perform a gradient descent step to udpate theta
+  * if t mod tau = 0 then theta' <- theta
+* **End For**
+* **For** steps t in 1,2,3,... do
+  * Sample action from behavior policy a
+  * Play action a and observe (s',r)
+  * Store (s,a,r,s') into D, overwriting oldest self-generated transition if over capacity
+  * Sample a mini-batch of n transitions from D with prioritization
+  * Calculate loss J(Q) using target network
+  * Perform a gradient descent step to update theta
+  * if t mod tau = 0 then theta' <- theta
+  * s <- s'
+* **End For**
