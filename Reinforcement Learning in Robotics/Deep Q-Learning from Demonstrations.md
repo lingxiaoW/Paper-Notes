@@ -6,6 +6,7 @@ https://danieltakeshi.github.io/2019/04/30/il-and-rl/
 * In many real-world settings of RL, we have access to data of the system being operated by its previous controller, but we don't have access to an accurate simulator of the system.
 * This paper presents an algorithm, deep Q-learning from demonstration (DDfD), that leverages small sets of demonstration data to massively accelerate the learning process. 
 * DQfD works by combining temporal difference updates with supervised classification of the demonstrator's actions. 
+* Straightforward solution of performing supervised learning on the demonstration data and then applying RL is not ideal since we want to use the demonstration data continuously throughout training as needed, rather than ignoring it. 
 
 ## Deep Q-Learning from Demonstrations
 
@@ -30,9 +31,10 @@ used as a starting point for TD learning. Regularization loss is to prevent the 
 * Supervised large margin classification loss
   * J_E = max_a [Q(s,a) + L(a_E, a)] - Q(s,a_E)
   * where a_E is the action the expert takes at state s,
-  * L(a_E, a) is a margin function that is 0 when a=a_E and positive otherwise.
+  * L(a_E, a) is a margin function that is 0 when a=a_E and positive otherwise (where DQfN used 0.8).
+  * J_E is designed to make the Q-values of non-demonstrator to be smaller than Q-values that the demonstrator actually took. 
 * Loss function: 
-  * J(Q) = J_DQ + lamba_1 * J_n + lambda_2 * J_E + lambda_3 * J_L2
+  * J(Q) = J_DQ + lamba_1 * J_n + lambda_2 * J_E + lambda_3 * J_L2 (where DQfN sets lambda_1 and lambda_2 as 1 and lambda_3 as 1e-5).
 
 
 ## Algorithm Deep Q-Learning from Demonstrations
@@ -40,13 +42,13 @@ used as a starting point for TD learning. Regularization loss is to prevent the 
 * **For** steps t in 1,2,3,...,k do
   * Sample a mini-batch of n transitions from D with prioritization
   * Calculate loss J(Q) using target network
-  * Perform a gradient descent step to udpate theta
+  * Perform a gradient descent step to udpate theta (minimize J(Q))
   * if t mod tau = 0 then theta' <- theta
 * **End For**
 * **For** steps t in 1,2,3,... do
   * Sample action from behavior policy a
   * Play action a and observe (s',r)
-  * Store (s,a,r,s') into D, overwriting oldest self-generated transition if over capacity
+  * Store (s,a,r,s') into D, overwriting oldest self-generated transition if over capacity (never remove demonstration data)
   * Sample a mini-batch of n transitions from D with prioritization
   * Calculate loss J(Q) using target network
   * Perform a gradient descent step to update theta
