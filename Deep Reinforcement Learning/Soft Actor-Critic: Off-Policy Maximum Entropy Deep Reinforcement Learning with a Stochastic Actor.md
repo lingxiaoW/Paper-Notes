@@ -20,5 +20,15 @@
     * Unlike TD3, there is no target policy smoothing, i.e., no noises adding on teh actor policy. 
 
 ## Abstract
+* RL suffer from two major challenges: 
+ * Very high sample complexity;
+ * Brittle convergence properties 
+* In the soft actor-critic framework, the actor aims to maxmize expected reward while also maximizing entropy. 
+ * That is, to succeed at the task while acting as randomly as possible. 
+ * Combine off-policy updates with a stable stochastic actor-critic formulation. 
+
+## Introduction
+* Use maximum entropy framework, which augments the standard maximum reward reinforcement learning objective with an entropy maximization term to improve exploration.
+* 
 
          
