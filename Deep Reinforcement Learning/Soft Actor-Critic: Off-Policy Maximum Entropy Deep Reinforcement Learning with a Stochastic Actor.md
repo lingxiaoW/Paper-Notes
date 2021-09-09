@@ -42,6 +42,6 @@
     * Use Kullback-Leibler divergence to restrict the policy to some set of policies. 
 * Soft actor-critic
   * Use function approximators for both the state value ``V(s)``, Q-function ``Q(s,a)``, and a tractable policy ``pi(a|s)`` (for continuous action space, the output fo the policy network could be Gaussian with mean and covariance given by neural networks).
-  * The updating equations of three networks can be found in paper. 
+  * The updating equations of three networks can be found in [paper](http://proceedings.mlr.press/v80/haarnoja18b). 
 
          
