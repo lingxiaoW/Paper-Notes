@@ -21,14 +21,27 @@
 
 ## Abstract
 * RL suffer from two major challenges: 
- * Very high sample complexity;
- * Brittle convergence properties 
+  * Very high sample complexity (even simple tasks can require millions of steps of data collection, and complex behaviors with high-dimensional observations might need substantially more);
+  * Brittle convergence properties (RL methods are brittle with respect to their hyperparameters)
 * In the soft actor-critic framework, the actor aims to maxmize expected reward while also maximizing entropy. 
- * That is, to succeed at the task while acting as randomly as possible. 
- * Combine off-policy updates with a stable stochastic actor-critic formulation. 
+  * That is, to succeed at the task while acting as randomly as possible. 
+  * Combine off-policy updates with a stable stochastic actor-critic formulation. 
 
 ## Introduction
 * Use maximum entropy framework, which augments the standard maximum reward reinforcement learning objective with an entropy maximization term to improve exploration.
-* 
+* Soft actor-critic incroporates three key ingredients: 
+  * an actor-critic architecture with separate policy and value function networks;
+  * an off-policy formulation that enables reuse of previously collected data for efficiency;
+  * entorpy maximization to enable stability and exploration. 
+
+## From Soft Policy Iteration to Soft Actor-Critic
+* Policy iteration: policy evaluation + policy improvement.
+  * Policy evaluation: we wish to compute the value of a policy ``pi`` according to the maximum entropy objective. 
+    * ``Q(s_t, a_t) = r(s_t, a_t) + gamma * E_{s_{t+1} ~ p}[V(s_{t+1})]`` where ``V(s_t)=E_{a_t~pi}[Q(s_t, a_t)-log pi(a_t|s_t)]``
+  * Policy improvement: we update the policy towards the exponential of the new Q-function (this particular choice of update can be guaranteed to result in an improved policy in terms of its soft value).
+    * Use Kullback-Leibler divergence to restrict the policy to some set of policies. 
+* Soft actor-critic
+  * Use function approximators for both the state value ``V(s)``, Q-function ``Q(s,a)``, and a tractable policy ``pi(a|s)`` (for continuous action space, the output fo the policy network could be Gaussian with mean and covariance given by neural networks).
+  * The updating equations of three networks can be found in paper. 
 
          
