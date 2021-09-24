@@ -19,3 +19,7 @@
   * Outputs: final user position
   * Architecture: 2-layer BiLSTM with a hidden size of 100 + 2-layer FNN. The resulting vector is then passed to a linear layer that converts it to a two-dimensional Cartesian 
   displacement relative to the start of each window. 
+  
+## Experiments
+* Collect training data from a hand-hold rig and walking in 3 buildings for 20 hours. 
+* Compared with traditional and deep-learning based methods. 
