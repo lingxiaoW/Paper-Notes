@@ -17,4 +17,8 @@
 * The whole system contains a forward model and an inverse model. 
   * The Forward model simulates the gas concentration distribution from a known source location and wind information; 
   * The measurements are fed into the inverse model to estimate the whole gas concentration and source distribution as well as the uncertainty map ``u``. 
-  * The estimates are used to define the reward and observation for the RL algorithm which are used to train the movement policy. 
+  * The estimates are used to define the reward and observation for the RL algorithm which are used to train the movement policy (i.e., model-based rewards).
+
+## Model-based reward
+* The definition of reward uses the gas concentration estimate ``f_hat``, the source estimate ``u_hat``, and the uncertainty map ``h_hat`` (i.e., the variance of the concentration). 
+* The actual gas concentration is compared with the estimated value, i.e., ``f_hat-f``, and the reward is defined according to this difference. 
