@@ -5,8 +5,8 @@
   * In cVTF, multiple robots store their own instances, and learn from the stored instances
 * The RL algorithm is Q-learning (Not Deep Q network)
 
-## VTF Method
-* Reward: number of cycles that the robot detects plumes
+## VTF and cVTF Methods
+* Reward: length of period that the robot detects plumes
 * Approximate Q value using locally weighted average (LWA) method
 * Collect training data from real-world environment
 
