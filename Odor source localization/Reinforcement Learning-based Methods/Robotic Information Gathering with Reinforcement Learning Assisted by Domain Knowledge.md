@@ -1,11 +1,13 @@
 ## Abstract
 * We propose a solution that assists Reinforcement Learning with existing domain knowledge based on a model of the gas dispersion process. 
-* Furthermore, the framework developed in this work can also be generalized to a large variety of information gathering tasks.
-
+* Incorporate a priori domain knowledge (from physics) by designing appropriate rewards and observation inputs for the RL algorithm. 
 
 ## Introduction
 * This work proposes an algorithmic framework to solve robotic IG (information gathering) and enhance it by exploiting a priori domain knowledge about the environment. 
-* In particular, we will show how to make use of a mathematical model in order to (i) shape the reward and (ii) to enhance the observation for the RL framework.
+* In particular, this paper shows how to make use of a mathematical model to 
+  * (i) shape the reward and 
+  * (ii) to enhance the observation for the RL framework.
+* This idea is motivated by the hypothesis that it is of advantage to provide priori ifnromation available to the robot with otherwise has to be learned with high effort.
 
 ## Problem Statement
 * Divide the search domain into ``C`` cells arranged in a regular grid.
